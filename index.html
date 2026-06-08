@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan · 50 Años</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D08A;
+    --gold-dim: #8A6E2F;
+    --dark: #0D0D0D;
+    --dark2: #141414;
+    --dark3: #1C1C1C;
+    --dark4: #242424;
+    --text: #F0EAD6;
+    --text-muted: #A89B7A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ornament {
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  .photo-frame {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 6px;
+    margin: 0 auto 2rem;
+    position: relative;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .photo-frame::before, .photo-frame::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .photo-frame::before { inset: -12px; }
+  .photo-frame::after { inset: -22px; }
+  .photo-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--dark3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .photo-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+  .hero h1 span {
+    display: block;
+    font-size: 0.45em;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: var(--gold-light);
+    margin-bottom: 0.3em;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    width: fit-content;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+  .divider-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .divider-line.right { background: linear-gradient(90deg, var(--gold), transparent); }
+  .divider-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .hero-subtitle {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 460px;
+    line-height: 1.6;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gold-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    font-family: 'Cinzel', serif;
+    animation: pulse 2s ease infinite;
+  }
+  .scroll-arrow { width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold-dim), transparent); }
+  .section-title { text-align: center; padding: 4rem 2rem 2rem; }
+  .section-title p { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.4em; color: var(--gold-dim); margin-bottom: 0.8rem; }
+  .section-title h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 300; color: var(--text); }
+  .section-title h2 em { color: var(--gold); font-style: italic; }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .video-card {
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+  .video-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); }
+  .video-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--dark4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .video-card:hover .play-btn { background: rgba(201,168,76,0.25); transform: scale(1.1); }
+  .play-icon { width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-left: 16px solid var(--gold); margin-left: 4px; }
+  .video-info { padding: 1rem 1.25rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  .video-sender { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.3rem; }
+  .video-msg { font-size: 0.95rem; color: var(--text-muted); font-style: italic; line-height: 1.4; }
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.93);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal { width: 100%; max-width: 820px; background: var(--dark2); border: 1px solid rgba(201,168,76,0.3); border-radius: 4px; overflow: hidden; position: relative; }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; z-index: 10; line-height: 1; padding: 0.25rem 0.5rem; transition: color 0.2s; }
+  .modal-close:hover { color: var(--gold); }
+  .modal-video { width: 100%; aspect-ratio: 16/9; background: #000; }
+  .modal-video iframe { width: 100%; height: 100%; border: none; display: block; }
+  .modal-video .no-video { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 1rem; }
+  .modal-video .no-video span { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold-dim); }
+  .modal-info { padding: 1.25rem 1.5rem; border-top: 1px solid rgba(201,168,76,0.15); }
+  .modal-sender { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.4rem; }
+  .modal-msg { font-size: 1.05rem; color: var(--text-muted); font-style: italic; }
+  .modal-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  .nav-btn { background: none; border: 1px solid rgba(201,168,76,0.3); color: var(--gold); padding: 0.4rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; cursor: pointer; transition: background 0.2s, border-color 0.2s; border-radius: 2px; }
+  .nav-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .counter { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.15em; }
+  footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  footer p { font-size: 1rem; color: var(--text-muted); font-style: italic; }
+  footer .gold-text { color: var(--gold); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="ornament">✦ &nbsp; F E L I C I D A D E S &nbsp; ✦</div>
+
+  <div class="photo-frame">
+    <div class="photo-inner">
+      <!-- FOTO: sustituye la URL por la de Juan -->
+      <img src="URL_FOTO_JUAN_AQUI" alt="Juan" onerror="this.parentElement.innerHTML='<div style=font-size:4rem;color:var(--gold-dim)>👤</div>'">
+    </div>
+  </div>
+
+  <h1><span>50 AÑOS</span>Juan</h1>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line right"></div>
+  </div>
+
+  <p class="hero-subtitle">
+    Cinco décadas de vida, de risas y de momentos que no se olvidan.
+  </p>
+
+  <div class="scroll-hint">
+    <span>LOS MENSAJES</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="section-title">
+  <p>TODOS CONTIGO</p>
+  <h2>Los que te quieren <em>tienen algo que decirte</em></h2>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<footer>
+  <div class="divider" style="justify-content:center;margin-bottom:1.5rem">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line right"></div>
+  </div>
+  <p>Con todo el cariño del mundo, <span class="gold-text">para Juan en su 50 cumpleaños</span></p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-video" id="modalVideo"></div>
+    <div class="modal-info">
+      <div class="modal-sender" id="modalSender"></div>
+      <div class="modal-msg" id="modalMsg"></div>
+    </div>
+    <div class="modal-nav">
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">← ANTERIOR</button>
+      <span class="counter" id="counter"></span>
+      <button class="nav-btn" id="nextBtn" onclick="navigate(1)">SIGUIENTE →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  EDITA AQUÍ: añade los vídeos de felicitación
+//  Para cada vídeo necesitas:
+//   - nombre: quién lo manda
+//   - msg: mensaje corto que aparece en la tarjeta
+//   - url: enlace de Google Drive (compartido como "Cualquiera con el enlace")
+// ============================================================
+const videos = [
+  { nombre: "Tu hermano Nacho",   msg: "¡Feliz cumpleaños, hermano! Cincuenta años llevándote la contraria... y contigo siempre.",  url: "https://drive.google.com/file/d/ID_VIDEO_1/view" },
+  { nombre: "Mamá",               msg: "Qué orgullo verte cumplir cincuenta años. Te quiero infinito.",                               url: "https://drive.google.com/file/d/ID_VIDEO_2/view" },
+  { nombre: "Paco y María",       msg: "Que sean otros cincuenta igual de buenos, colega.",                                           url: "https://drive.google.com/file/d/ID_VIDEO_3/view" },
+  { nombre: "Los del trabajo",    msg: "Sin ti la oficina no sería lo mismo. ¡Felicidades!",                                          url: "https://drive.google.com/file/d/ID_VIDEO_4/view" },
+  { nombre: "Tu prima Laura",     msg: "Eres el mayor de todos y el que menos lo parece. Un beso enorme.",                            url: "https://drive.google.com/file/d/ID_VIDEO_5/view" },
+  { nombre: "Carlos",             msg: "Cincuenta tacos y todavía creyéndote el más joven. Salud, amigo.",                            url: "https://drive.google.com/file/d/ID_VIDEO_6/view" },
+  // Sigue añadiendo hasta 20...
+];
+// ============================================================
+
+let currentIndex = 0;
+
+function getDriveEmbed(url) {
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+  const m2 = url.match(/id=([a-zA-Z0-9_-]+)/);
+  if (m2) return 'https://drive.google.com/file/d/' + m2[1] + '/preview';
+  return null;
+}
+
+function renderGallery() {
+  const g = document.getElementById('gallery');
+  videos.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-info">
+        <div class="video-sender">${v.nombre}</div>
+        <div class="video-msg">"${v.msg}"</div>
+      </div>`;
+    card.onclick = () => openModal(i);
+    g.appendChild(card);
+  });
+}
+
+function openModal(i) {
+  currentIndex = i;
+  updateModal();
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateModal() {
+  const v = videos[currentIndex];
+  document.getElementById('modalSender').textContent = v.nombre;
+  document.getElementById('modalMsg').textContent = '"' + v.msg + '"';
+  document.getElementById('counter').textContent = (currentIndex + 1) + ' de ' + videos.length;
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').disabled = currentIndex === videos.length - 1;
+  const embed = getDriveEmbed(v.url);
+  const mv = document.getElementById('modalVideo');
+  if (embed) {
+    mv.innerHTML = '<iframe src="' + embed + '" allowfullscreen allow="autoplay"></iframe>';
+  } else {
+    mv.innerHTML = '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
+  }
+}
+
+function navigate(dir) {
+  currentIndex = Math.max(0, Math.min(videos.length - 1, currentIndex + dir));
+  updateModal();
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('modalVideo').innerHTML = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModalBtn();
+  if (e.key === 'ArrowLeft') navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+
+renderGallery();
+</script>
+</body>
+</html>
