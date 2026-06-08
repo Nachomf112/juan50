@@ -275,12 +275,22 @@ function checkPwd() {
 
 let currentIndex = 0;
 
-function getDriveEmbed(url) {
+function getDriveId(url) {
   const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+  if (m) return m[1];
   const m2 = url.match(/id=([a-zA-Z0-9_-]+)/);
-  if (m2) return 'https://drive.google.com/file/d/' + m2[1] + '/preview';
+  if (m2) return m2[1];
   return null;
+}
+
+function getDriveEmbed(url) {
+  const id = getDriveId(url);
+  return id ? 'https://drive.google.com/file/d/' + id + '/preview' : null;
+}
+
+function getDriveDirectUrl(url) {
+  const id = getDriveId(url);
+  return id ? 'https://drive.google.com/file/d/' + id + '/view' : null;
 }
 
 function renderGallery() {
@@ -314,10 +324,24 @@ function updateModal() {
   document.getElementById('prevBtn').disabled = currentIndex === 0;
   document.getElementById('nextBtn').disabled = currentIndex === videos.length - 1;
   const embed = getDriveEmbed(v.url);
+  const direct = getDriveDirectUrl(v.url);
   const mv = document.getElementById('modalVideo');
-  mv.innerHTML = embed
-    ? '<iframe src="' + embed + '" allowfullscreen allow="autoplay"></iframe>'
-    : '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
+  if (embed) {
+    mv.innerHTML = '<iframe src="' + embed + '" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe>' +
+      '<div class="no-video" id="mobileBtn" style="display:none;flex-direction:column;gap:1rem;">' +
+      '<span>El vídeo no puede mostrarse aquí</span>' +
+      '<a href="' + direct + '" target="_blank" style="border:1px solid var(--gold);color:var(--gold);padding:0.6rem 1.5rem;font-family:Cinzel,serif;font-size:0.75rem;letter-spacing:0.2em;text-decoration:none;border-radius:2px;">▶ ABRIR VÍDEO</a>' +
+      '</div>';
+    setTimeout(function(){
+      var iframe = mv.querySelector('iframe');
+      var btn = mv.querySelector('#mobileBtn');
+      if (iframe && btn) {
+        try { var h = iframe.contentWindow.location.href; } catch(e) { iframe.style.display='none'; btn.style.display='flex'; }
+      }
+    }, 3000);
+  } else {
+    mv.innerHTML = '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
+  }
 }
 
 function navigate(dir) {
