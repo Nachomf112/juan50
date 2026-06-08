@@ -18,183 +18,125 @@
     --text-muted: #A89B7A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
+  body { background: var(--dark); color: var(--text); font-family: 'Cormorant Garamond', serif; min-height: 100vh; overflow-x: hidden; }
+
+  /* LOGIN */
+  #loginScreen {
+    position: fixed; inset: 0; z-index: 9999;
     background: var(--dark);
-    color: var(--text);
-    font-family: 'Cormorant Garamond', serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2rem; padding: 2rem;
   }
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  #loginScreen::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .login-ornament { color: var(--gold); font-size: 1rem; letter-spacing: 0.5em; opacity: 0.5; }
+  .login-title { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--gold); letter-spacing: 0.08em; text-align: center; }
+  .login-subtitle { font-size: 1.1rem; font-style: italic; color: var(--text-muted); text-align: center; }
+  .login-divider { display: flex; align-items: center; gap: 1rem; }
+  .login-divider-line { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .login-divider-line.r { background: linear-gradient(90deg, var(--gold), transparent); }
+  .login-diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+  .login-box {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    width: 100%; max-width: 320px;
+  }
+  .login-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold-dim); }
+  .login-input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
     text-align: center;
-    padding: 3rem 2rem;
-    overflow: hidden;
+    letter-spacing: 0.1em;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+  .login-input:focus { border-color: var(--gold); }
+  .login-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.75rem 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .login-btn:hover { background: rgba(201,168,76,0.1); }
+  .login-error {
+    font-size: 0.85rem;
+    color: #c0392b;
+    font-style: italic;
+    min-height: 1.2em;
+    text-align: center;
+  }
+
+  /* MAIN */
+  #mainContent { display: none; }
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 3rem 2rem; overflow: hidden;
   }
   .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
-  .ornament {
-    color: var(--gold);
-    font-size: 1.2rem;
-    letter-spacing: 0.5em;
-    opacity: 0.6;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 1.2s ease both;
-  }
+  .ornament { color: var(--gold); font-size: 1.2rem; letter-spacing: 0.5em; opacity: 0.6; margin-bottom: 1.5rem; animation: fadeUp 1.2s ease both; }
   .photo-frame {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-    padding: 6px;
-    margin: 0 auto 2rem;
-    position: relative;
+    width: 200px; height: 200px; border-radius: 50%;
+    border: 2px solid var(--gold); padding: 6px;
+    margin: 0 auto 2rem; position: relative;
     animation: fadeUp 1s ease 0.2s both;
   }
-  .photo-frame::before, .photo-frame::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.3);
-  }
+  .photo-frame::before, .photo-frame::after { content: ''; position: absolute; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
   .photo-frame::before { inset: -12px; }
   .photo-frame::after { inset: -22px; }
-  .photo-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: var(--dark3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .photo-inner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  .hero h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2.8rem, 8vw, 5rem);
-    font-weight: 400;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    animation: fadeUp 1s ease 0.3s both;
-  }
-  .hero h1 span {
-    display: block;
-    font-size: 0.45em;
-    font-weight: 600;
-    letter-spacing: 0.4em;
-    color: var(--gold-light);
-    margin-bottom: 0.3em;
-  }
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1.5rem auto;
-    width: fit-content;
-    animation: fadeUp 1s ease 0.5s both;
-  }
+  .photo-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--dark3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .photo-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .hero h1 { font-family: 'Cinzel', serif; font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 400; color: var(--gold); letter-spacing: 0.05em; line-height: 1; animation: fadeUp 1s ease 0.3s both; }
+  .hero h1 span { display: block; font-size: 0.45em; font-weight: 600; letter-spacing: 0.4em; color: var(--gold-light); margin-bottom: 0.3em; }
+  .divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem auto; width: fit-content; animation: fadeUp 1s ease 0.5s both; }
   .divider-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
   .divider-line.right { background: linear-gradient(90deg, var(--gold), transparent); }
   .divider-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
-  .hero-subtitle {
-    font-size: 1.3rem;
-    font-style: italic;
-    color: var(--text-muted);
-    max-width: 460px;
-    line-height: 1.6;
-    animation: fadeUp 1s ease 0.6s both;
-  }
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--gold-dim);
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    font-family: 'Cinzel', serif;
-    animation: pulse 2s ease infinite;
-  }
+  .hero-subtitle { font-size: 1.3rem; font-style: italic; color: var(--text-muted); max-width: 460px; line-height: 1.6; animation: fadeUp 1s ease 0.6s both; }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--gold-dim); font-size: 0.75rem; letter-spacing: 0.2em; font-family: 'Cinzel', serif; animation: pulse 2s ease infinite; }
   .scroll-arrow { width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold-dim), transparent); }
   .section-title { text-align: center; padding: 4rem 2rem 2rem; }
   .section-title p { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.4em; color: var(--gold-dim); margin-bottom: 0.8rem; }
   .section-title h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 300; color: var(--text); }
   .section-title h2 em { color: var(--gold); font-style: italic; }
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem 2rem 4rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .video-card {
-    background: var(--dark3);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: pointer;
-  }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 1rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .video-card { background: var(--dark3); border: 1px solid rgba(201,168,76,0.15); border-radius: 4px; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: pointer; }
   .video-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); }
-  .video-thumb {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--dark4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .play-btn {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: rgba(201,168,76,0.12);
-    border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.3s, transform 0.2s;
-  }
+  .video-thumb { width: 100%; aspect-ratio: 16/9; background: var(--dark4); display: flex; align-items: center; justify-content: center; }
+  .play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(201,168,76,0.12); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; transition: background 0.3s, transform 0.2s; }
   .video-card:hover .play-btn { background: rgba(201,168,76,0.25); transform: scale(1.1); }
   .play-icon { width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-left: 16px solid var(--gold); margin-left: 4px; }
   .video-info { padding: 1rem 1.25rem; border-top: 1px solid rgba(201,168,76,0.1); }
   .video-sender { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.3rem; }
   .video-msg { font-size: 0.95rem; color: var(--text-muted); font-style: italic; line-height: 1.4; }
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.93);
-    z-index: 1000;
-    display: flex; align-items: center; justify-content: center;
-    padding: 2rem;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.93); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .modal-overlay.active { opacity: 1; pointer-events: all; }
   .modal { width: 100%; max-width: 820px; background: var(--dark2); border: 1px solid rgba(201,168,76,0.3); border-radius: 4px; overflow: hidden; position: relative; }
   .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; z-index: 10; line-height: 1; padding: 0.25rem 0.5rem; transition: color 0.2s; }
   .modal-close:hover { color: var(--gold); }
   .modal-video { width: 100%; aspect-ratio: 16/9; background: #000; }
   .modal-video iframe { width: 100%; height: 100%; border: none; display: block; }
-  .modal-video .no-video { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 1rem; }
+  .modal-video .no-video { display: flex; align-items: center; justify-content: center; height: 100%; }
   .modal-video .no-video span { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold-dim); }
   .modal-info { padding: 1.25rem 1.5rem; border-top: 1px solid rgba(201,168,76,0.15); }
   .modal-sender { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.4rem; }
@@ -213,50 +155,65 @@
 </head>
 <body>
 
-<section class="hero">
-  <div class="ornament">✦ &nbsp; F E L I C I D A D E S &nbsp; ✦</div>
-
-  <div class="photo-frame">
-    <div class="photo-inner">
-      <!-- FOTO: sustituye la URL por la de Juan -->
-      <img src="URL_FOTO_JUAN_AQUI" alt="Juan" onerror="this.parentElement.innerHTML='<div style=font-size:4rem;color:var(--gold-dim)>👤</div>'">
-    </div>
+<!-- PANTALLA DE ACCESO -->
+<div id="loginScreen">
+  <div class="login-ornament">✦ &nbsp; A C C E S O &nbsp; P R I V A D O &nbsp; ✦</div>
+  <div class="login-title">Juan · 50 Años</div>
+  <div class="login-divider">
+    <div class="login-divider-line"></div>
+    <div class="login-diamond"></div>
+    <div class="login-divider-line r"></div>
   </div>
-
-  <h1><span>50 AÑOS</span>Juan</h1>
-
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line right"></div>
+  <p class="login-subtitle">Introduce la clave para ver los mensajes</p>
+  <div class="login-box">
+    <label class="login-label">CONTRASEÑA</label>
+    <input class="login-input" type="password" id="pwdInput" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')checkPwd()">
+    <button class="login-btn" onclick="checkPwd()">ENTRAR</button>
+    <div class="login-error" id="loginError"></div>
   </div>
-
-  <p class="hero-subtitle">
-    Cinco décadas de vida, de risas y de momentos que no se olvidan.
-  </p>
-
-  <div class="scroll-hint">
-    <span>LOS MENSAJES</span>
-    <div class="scroll-arrow"></div>
-  </div>
-</section>
-
-<div class="section-title">
-  <p>TODOS CONTIGO</p>
-  <h2>Los que te quieren <em>tienen algo que decirte</em></h2>
 </div>
 
-<div class="gallery" id="gallery"></div>
+<!-- CONTENIDO PRINCIPAL -->
+<div id="mainContent">
+  <section class="hero">
+    <div class="ornament">✦ &nbsp; F E L I C I D A D E S &nbsp; ✦</div>
+    <div class="photo-frame">
+      <div class="photo-inner">
+        <!-- FOTO: sustituye URL_FOTO_JUAN por el enlace directo de la foto -->
+        <img src="URL_FOTO_JUAN" alt="Juan" onerror="this.parentElement.innerHTML='<div style=font-size:4rem;color:var(--gold-dim)>👤</div>'">
+      </div>
+    </div>
+    <h1><span>50 AÑOS</span>Juan</h1>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line right"></div>
+    </div>
+    <p class="hero-subtitle">Cinco décadas de vida, de risas y de momentos que no se olvidan.</p>
+    <div class="scroll-hint">
+      <span>LOS MENSAJES</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
 
-<footer>
-  <div class="divider" style="justify-content:center;margin-bottom:1.5rem">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line right"></div>
+  <div class="section-title">
+    <p>TODOS CONTIGO</p>
+    <h2>Los que te quieren <em>tienen algo que decirte</em></h2>
   </div>
-  <p>Con todo el cariño del mundo, <span class="gold-text">para Juan en su 50 cumpleaños</span></p>
-</footer>
 
+  <div class="gallery" id="gallery"></div>
+
+  <footer>
+    <div class="divider" style="justify-content:center;margin-bottom:1.5rem">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line right"></div>
+    </div>
+    <p>Con todo el cariño del mundo, <span class="gold-text">para Juan en su 50 cumpleaños</span></p>
+  </footer>
+</div>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModalBtn()">✕</button>
@@ -275,11 +232,13 @@
 
 <script>
 // ============================================================
-//  EDITA AQUÍ: añade los vídeos de felicitación
-//  Para cada vídeo necesitas:
-//   - nombre: quién lo manda
-//   - msg: mensaje corto que aparece en la tarjeta
-//   - url: enlace de Google Drive (compartido como "Cualquiera con el enlace")
+//  CONTRASEÑA DE ACCESO
+// ============================================================
+const PASSWORD = "rasjuantxo2026";
+
+// ============================================================
+//  VÍDEOS — edita aquí los 20 mensajes
+//  url: enlace de Google Drive compartido como "Cualquiera con el enlace"
 // ============================================================
 const videos = [
   { nombre: "Tu hermano Nacho",   msg: "¡Feliz cumpleaños, hermano! Cincuenta años llevándote la contraria... y contigo siempre.",  url: "https://drive.google.com/file/d/ID_VIDEO_1/view" },
@@ -288,9 +247,22 @@ const videos = [
   { nombre: "Los del trabajo",    msg: "Sin ti la oficina no sería lo mismo. ¡Felicidades!",                                          url: "https://drive.google.com/file/d/ID_VIDEO_4/view" },
   { nombre: "Tu prima Laura",     msg: "Eres el mayor de todos y el que menos lo parece. Un beso enorme.",                            url: "https://drive.google.com/file/d/ID_VIDEO_5/view" },
   { nombre: "Carlos",             msg: "Cincuenta tacos y todavía creyéndote el más joven. Salud, amigo.",                            url: "https://drive.google.com/file/d/ID_VIDEO_6/view" },
-  // Sigue añadiendo hasta 20...
+  // Añade aquí los demás hasta 20...
 ];
 // ============================================================
+
+function checkPwd() {
+  const val = document.getElementById('pwdInput').value;
+  if (val === PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+  } else {
+    const err = document.getElementById('loginError');
+    err.textContent = 'Contraseña incorrecta. Inténtalo de nuevo.';
+    document.getElementById('pwdInput').value = '';
+    setTimeout(() => err.textContent = '', 3000);
+  }
+}
 
 let currentIndex = 0;
 
@@ -334,11 +306,9 @@ function updateModal() {
   document.getElementById('nextBtn').disabled = currentIndex === videos.length - 1;
   const embed = getDriveEmbed(v.url);
   const mv = document.getElementById('modalVideo');
-  if (embed) {
-    mv.innerHTML = '<iframe src="' + embed + '" allowfullscreen allow="autoplay"></iframe>';
-  } else {
-    mv.innerHTML = '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
-  }
+  mv.innerHTML = embed
+    ? '<iframe src="' + embed + '" allowfullscreen allow="autoplay"></iframe>'
+    : '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
 }
 
 function navigate(dir) {
