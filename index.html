@@ -95,6 +95,10 @@
     pointer-events: none;
   }
   .ornament { color: var(--gold); font-size: 1.2rem; letter-spacing: 0.5em; opacity: 0.6; margin-bottom: 1.5rem; animation: fadeUp 1.2s ease both; }
+  .hero-photos { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-bottom: 2rem; animation: fadeUp 1s ease 0.2s both; width: 100%; max-width: 860px; }
+  .side-img { width: 130px; height: 130px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.35); padding: 4px; flex-shrink: 0; overflow: hidden; }
+  .side-img img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center top; filter: brightness(0.88) sepia(0.15); }
+  @media (max-width: 600px) { .side-img { width: 80px; height: 80px; } .hero-photos { gap: 1rem; } }
   .photo-frame {
     width: 200px; height: 200px; border-radius: 50%;
     border: 2px solid var(--gold); padding: 6px;
@@ -177,11 +181,14 @@
 <div id="mainContent">
   <section class="hero">
     <div class="ornament">✦ &nbsp; F E L I C I D A D E S &nbsp; ✦</div>
-    <div class="photo-frame">
-      <div class="photo-inner">
-        <!-- FOTO: sustituye URL_FOTO_JUAN por el enlace directo de la foto -->
-        <img src="https://nachomf112.github.io/juan50/foto_juan.png" alt="Juan" onerror="this.parentElement.innerHTML='<div style=font-size:4rem;color:var(--gold-dim)>👤</div>'"style="object-position: center top;">
+    <div class="hero-photos">
+      <div class="side-img"><img src="https://nachomf112.github.io/juan50/ras_mica.png" alt="Foto 1" onerror="this.style.display='none'"></div>
+      <div class="photo-frame">
+        <div class="photo-inner">
+          <img src="https://nachomf112.github.io/juan50/foto_juan.png" alt="Juan" onerror="this.parentElement.innerHTML='<div style=font-size:4rem;color:var(--gold-dim)>👤</div>'" style="object-position: center top;">
+        </div>
       </div>
+      <div class="side-img"><img src="https://nachomf112.github.io/juan50/imagen.png" alt="Foto 2" onerror="this.style.display='none'"></div>
     </div>
     <h1><span>50 AÑOS</span>Juan</h1>
     <div class="divider">
