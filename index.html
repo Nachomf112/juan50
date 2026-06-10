@@ -208,6 +208,23 @@
     <h2>Los que te quieren <em>tienen algo que decirte</em></h2>
   </div>
 
+  <div style="text-align:center;margin:1rem 0 2rem;">
+    <button onclick="playAll()" style="
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.8rem 2.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    " onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='transparent'">
+      ▶ &nbsp; REPRODUCIR TODOS
+    </button>
+  </div>
+
   <div class="gallery" id="gallery"></div>
 
   <footer>
@@ -266,6 +283,10 @@ const videos = [
   { nombre: "Vero",               msg: "Con mucho cariño, ¡feliz cumpleaños!",                               url: "https://nachomf112.github.io/juan50/Vero.mp4" },
   { nombre: "Yoli",               msg: "¡Cincuenta años! Que los próximos cincuenta sean igual de buenos.",  url: "https://nachomf112.github.io/juan50/Yoli.mp4" },
   { nombre: "Diez",               msg: "¡Felicidades Juan! Un abrazo enorme.",                                url: "https://nachomf112.github.io/juan50/Diez.mp4" },
+  { nombre: "Javier, Melo y Olivia", msg: "¡Feliz cumpleaños Juan! Os queremos mucho.",                           url: "https://nachomf112.github.io/juan50/Javier%2C%20Melo%20y%20Olivia.mp4" },
+  { nombre: "Fran",               msg: "¡Cincuenta años y a por más! Felicidades.",                               url: "https://nachomf112.github.io/juan50/Fran.mp4" },
+  { nombre: "Wendy",              msg: "¡Felicidades Juan! Que sea un día inolvidable.",                           url: "https://nachomf112.github.io/juan50/Wendy.mp4" },
+  { nombre: "Ricardo y Nuria",    msg: "¡Feliz cumpleaños! Un abrazo enorme de nuestra parte.",                   url: "https://nachomf112.github.io/juan50/Ricardo%20y%20Nuria.mp4" },
 ];
 // ============================================================
 
@@ -318,9 +339,15 @@ function updateModal() {
   document.getElementById('nextBtn').disabled = currentIndex === videos.length - 1;
   const mv = document.getElementById('modalVideo');
   if (v.url) {
-    mv.innerHTML = '<video controls autoplay playsinline style="width:100%;height:100%;background:#000;">' +
-      '<source src="' + v.url + '" type="video/mp4">' +
-      '</video>';
+    var vid = document.createElement('video');
+    vid.controls = true;
+    vid.autoplay = true;
+    vid.setAttribute('playsinline', '');
+    vid.style.cssText = 'width:100%;height:100%;background:#000;';
+    vid.innerHTML = '<source src="' + v.url + '" type="video/mp4">';
+    vid.onended = onVideoEnded;
+    mv.innerHTML = '';
+    mv.appendChild(vid);
   } else {
     mv.innerHTML = '<div class="no-video"><span>ENLACE NO CONFIGURADO AÚN</span></div>';
   }
@@ -331,8 +358,25 @@ function navigate(dir) {
   updateModal();
 }
 
+let autoplayAll = false;
+
+function playAll() {
+  autoplayAll = true;
+  openModal(0);
+}
+
+function onVideoEnded() {
+  if (autoplayAll && currentIndex < videos.length - 1) {
+    currentIndex++;
+    updateModal();
+  } else {
+    autoplayAll = false;
+  }
+}
+
 function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
 function closeModalBtn() {
+  autoplayAll = false;
   document.getElementById('modalOverlay').classList.remove('active');
   document.body.style.overflow = '';
   document.getElementById('modalVideo').innerHTML = '';
